@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+        <head>
+            <meta charset="utf-8"/>
+            <link rel="stylesheet" href="cv.css"/>
+            <title>CV LTD</title>
+        </head>
+        <body>
+            <div id="liseret"></div>
+            <div id="contenu">
+                
+                <h1 class="test">Alex Letondor</h1>
+                <script>
+                    document.getElementsByName(h1).innerText = test;
+                </script>
+                <h4>Entrepreneur, chef d'entreprise, programmeur et buisness-man.</h4>   
+                <section>
+                    <ul>
+                        <h1> Mon experience</h1>
+                        <li> <strong>De Juin 2020 à Aout 2020</strong> Ouvrier manutentionnaire à Ec2-stands(Vaux les près)</li>
+                        <li><strong>De Juin 2020 à Juillet 2021</strong>Ouvrier manutentionnaire à la caisserie Dutoit (Chavornay)</li>
+                        <li><strong>de Juillet à Aout 2022</strong> manutentionnaire à Swisstube(Champagne) </li>
+                    </ul>
+                </section>
+                <section>
+                    <ul>
+                        <h1>Mes competences</h1>
+                        <li>Bac S</li>
+                        <li>HTML5 CSS3(certificat OpenClassrooms)</li>
+                        <li>C(certificat OpenClassrooms)</li>
+                        <li>Extrême concentration et habilité et faire les tâches demander</li>
+                    </ul>
+                </section>
+                <section>
+                    <h1>Ma formation</h1>
+                    <p>Alors là, j'ai tout appris sur OpenClassrooms !</p>
+                </section>
+                <footer>
+                    <form method="post" action="traitement2.php">
+                        <fieldset>
+                            <legend>Vos coordonnées : </legend>
+                            <form method="post" action="traitement.php">
+                                <p> <label for="pseudo">Votre pseudo</label> : <input type="text" name="pseudo" id="pseudo" maxlength="10" placeholder="entre ton pseudo"/> </p>
+                                <p> <label for="mdp"> Votre mot de passe</label>: <input type="password" name="mdp" id="mdp"></p>
+                            </form>
+                            <p> <label for="age">Quel est la date </label> <input type="date" name="date" id = "date" ></p>
+                            <p> <label for="pays"> de quel pays viens tu ? </label>
+                                <select name="pays" id="pays">
+                                    <option value="Canada">Canada</option>
+                                    <option value="Israel">Israel</option>
+                            </p>
+                            </select>
+                            <p class="com"> <label for="commentaire"> Comment pense tu que je peux améliorer mon site ?</label> </br> <textarea name="commentaire" id="commentaire" cols="50" rows="10" ></textarea></p>
+                            <p> <input type="submit"></p>
+                        </fieldset>
+                    </form>
+                </footer>
+            </div>
+        </body>
+</html>

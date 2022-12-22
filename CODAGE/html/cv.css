@@ -1,0 +1,46 @@
+body
+{
+    background: url('greyzz.png');
+}
+h1
+{
+    text-align: center;
+    color:dimgrey;
+    font-family:'Courier New', Courier, monospace;
+}
+#liseret
+{
+    width: 10%;
+    margin-right: 3%;
+    height: 500px;
+    background-image: url('lodyas.png');
+    border-radius: 10px;
+}
+#contenu
+{
+    width: 85%;
+}
+#liseret, #contenu
+{
+    display: inline-block;
+    vertical-align: top;
+}
+h4
+{
+    text-align: center;
+    color: darkslategrey;
+    font-family: inherit;
+}
+.com
+{
+    text-align: center;
+}
+section
+{
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    /* overflow: visible; */
+    max-width: 300px;
+    margin-right: 110px;
+}
