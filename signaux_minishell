@@ -1,0 +1,104 @@
+#include <signal.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+
+struct termios saved_attributes;
+
+void	ignore_sigquit(void)
+{
+	struct sigaction	act;
+
+	memset(&act, 0, sizeof(act));
+	act.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &act, NULL);
+}
+
+void save_terminal_settings(void) {
+    tcgetattr(STDIN_FILENO, &saved_attributes);
+}
+
+void restore_terminal_settings(void) {
+    tcsetattr(STDIN_FILENO, TCSANOW, &saved_attributes);
+}
+
+void dismiss_signal(int signum, siginfo_t *info, void *ucontext) {
+    struct termios tattr;
+    (void)info; // Non utilisé
+    (void)ucontext; // Non utilisé
+
+    if (signum == SIGINT) {
+        // Modifie les paramètres du terminal pour ignorer ^C
+        tcgetattr(STDIN_FILENO, &tattr);
+        tattr.c_lflag &= ~(ECHOCTL);
+        tcsetattr(STDIN_FILENO, TCSANOW, &tattr);
+
+        printf("\n"); // Remplace ft_putchar_fd('\n', STDOUT_FILENO);
+        rl_on_new_line();
+        rl_replace_line("", 0);
+        rl_redisplay();
+
+        // Restaure les paramètres originaux du terminal
+        restore_terminal_settings();
+    }
+}
+
+void config_signals(void) {
+    struct sigaction sa;
+
+    sa.sa_sigaction = &dismiss_signal;
+    sa.sa_flags = SA_RESTART | SA_SIGINFO;
+    sigemptyset(&sa.sa_mask);
+    sigaddset(&sa.sa_mask, SIGINT);
+    sigaction(SIGINT, &sa, NULL);
+    signal(SIGQUIT, SIG_IGN);
+}
+void	signal_reset_prompt(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+void	signals_on(void)
+{
+	struct sigaction	act;
+
+	ignore_sigquit();
+	memset(&act, 0, sizeof(act));
+	act.sa_handler = &signal_reset_prompt;
+	sigaction(SIGINT, &act, NULL);
+}
+
+void	signal_print_newline(int signal)
+{
+	(void)signal;
+	rl_on_new_line();
+}
+
+void	signals_off(void)
+{
+	struct sigaction	act;
+
+	memset(&act, 0, sizeof(act));
+	act.sa_handler = &signal_print_newline;
+	sigaction(SIGINT, &act, NULL);
+	sigaction(SIGQUIT, &act, NULL);
+}
+
+int main(void) {
+    save_terminal_settings();
+    config_signals();
+
+    char *cmd_line;
+    while ((cmd_line = readline("> ")) != NULL) {
+        signals_on();
+        if (*cmd_line) {
+            printf("Votre commande : %s\n", cmd_line);
+        }
+        signals_off();
+        free(cmd_line);
+    }
+    return 0;
+}
